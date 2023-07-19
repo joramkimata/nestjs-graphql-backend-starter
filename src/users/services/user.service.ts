@@ -74,25 +74,7 @@ export class UserService extends BaseService {
 
     }
 
-    getAllStaff() {
-        return this.userRepository.find({
-            where: {
-                deleted: false,
-                userType: UserType.STAFF
-            },
-            relations: this.relations
-        });
-    }
 
-    getStaffDetail(uid: String) {
-        return this.userRepository.find({
-            where: {
-                deleted: false,
-                uuid: uid
-            },
-            relations: this.relations
-        });
-    }
 
     async updateUser(uuid: string, { email, fullName, phoneNumber }: UpdateUserInput) {
         const res = new ResponseUser();

@@ -29,7 +29,7 @@ import jwtConfig from './config/jwt.config';
     }),
     AuthModule,
     UsersModule,
-    SharedModule,
+    SharedModule
   ],
 })
 export class AppModule { }
