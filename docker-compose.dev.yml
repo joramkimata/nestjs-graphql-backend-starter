@@ -41,6 +41,7 @@ services:
         - DB_PASSWORD=docker
         - DB_NAME=nestjs_graphql
         - DB_SYNCHRONIZE=false
+        - DB_PREFIX=te
         - SECURITY_KEY=qwerty2022
         - REFRESH_TOKEN_EXPIRES_IN=1d
         - PORT=3000
