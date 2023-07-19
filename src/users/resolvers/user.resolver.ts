@@ -9,6 +9,8 @@ import { CreateUserInput } from "../inputs/create-user.input";
 import { UpdateUserInput } from "../inputs/update-user.input";
 import { ResponseUser } from "../responses/user.response";
 import { UserService } from "../services/user.service";
+import { PaginatedInput } from "src/shared/inputs/pagination.input";
+import { ResponseUserPaginated } from "../responses/user-paginated.response";
 
 
 @Resolver(of => User)
@@ -19,17 +21,6 @@ export class UserResolver {
     ) { }
 
     // Queries
-    @Query(returns => [User])
-    getAllStaff() {
-        return this.userService.getAllStaff();
-    }
-
-    @Query(returns => User)
-    getStaffDetail(
-        @Args('uid') uid: String
-    ) {
-        return this.userService.getStaffDetail(uid);
-    }
 
     @Query(returns => User)
     getCurrentUserInfo(
@@ -37,6 +28,19 @@ export class UserResolver {
         user: User
     ) {
         return this.userService.getCurrentUserInfo(user);
+    }
+
+    @Query(returns => [User])
+    getAllUsers() {
+        return this.userService.getAllUsers();
+    }
+
+    @Query(returns => ResponseUserPaginated)
+    getAllUserPaginated(
+        @Args('input')
+        input: PaginatedInput
+    ) {
+        return this.userService.getAllUserPaginated(input);
     }
 
     // Mutations

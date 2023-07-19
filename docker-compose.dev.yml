@@ -2,10 +2,10 @@ version: '3'
 
 services:
   db:
-    restart: always
-    image: postgres
+    # restart: always
+    image: postgres:15.2
     ports:
-      - '5434:5432'
+      - '5555:5432'
     environment:
       - POSTGRES_PASSWORD=docker
       - POSTGRES_USER=postgres
@@ -15,10 +15,10 @@ services:
     networks:
       - nest_graphql
   pgAdmin:
-    restart: always
-    image: dpage/pgadmin4
+    # restart: always
+    image: dpage/pgadmin4:7.4
     ports:
-      - '8008:80'
+      - '8888:80'
     environment:
       - PGADMIN_DEFAULT_EMAIL=dev@docker.org
       - PGADMIN_DEFAULT_PASSWORD=docker
@@ -26,38 +26,38 @@ services:
       - pgadmin_nest:/var/lib/pgadmin
     networks:
       - nest_graphql
-    api:
-      restart: always
-      build:
-        context: .
-        dockerfile: Dockerfile.dev
-      ports:
-        - 3001:3000
-      environment:
-        - CONNECTION_TYPE=postgres
-        - DB_HOST=db
-        - DB_PORT=5432
-        - DB_POSTGRES_USER=postgres
-        - DB_PASSWORD=docker
-        - DB_NAME=nestjs_graphql
-        - DB_SYNCHRONIZE=false
-        - DB_PREFIX=te
-        - SECURITY_KEY=qwerty2022
-        - REFRESH_TOKEN_EXPIRES_IN=1d
-        - PORT=3000
-        - EMAIL_HOST=smtp.cloudmta.net
-        - EMAIL_USER=f9848c506dea731b
-        - EMAIL_PASSWORD=cDqTJCxV4xEaBNsQ6h1p1bbx
-        - EMAIL_PORT=587
-        - EMAIL_FROM='Izweb Academy<no-reply@izwebacademy.com>'
-        - IGNORE_ENV_FILE=true
-        - EMAIL_LOGGER=false
-      volumes:
-        - .:/app
-      depends_on:
-        - db
-      networks:
-        - nest_graphql
+  api:
+    # restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3333:3000
+    environment:
+      - CONNECTION_TYPE=postgres
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_POSTGRES_USER=postgres
+      - DB_PASSWORD=docker
+      - DB_NAME=nestjs_graphql
+      - DB_SYNCHRONIZE=false
+      - DB_PREFIX=starter
+      - SECURITY_KEY=qwerty2022
+      - REFRESH_TOKEN_EXPIRES_IN=1d
+      - PORT=3000
+      - EMAIL_HOST=smtp.cloudmta.net
+      - EMAIL_USER=f9848c506dea731b
+      - EMAIL_PASSWORD=cDqTJCxV4xEaBNsQ6h1p1bbx
+      - EMAIL_PORT=587
+      - EMAIL_FROM='Izweb Academy<no-reply@izwebacademy.com>'
+      - IGNORE_ENV_FILE=true
+      - EMAIL_LOGGER=false
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    networks:
+      - nest_graphql
 
 networks:
   nest_graphql:

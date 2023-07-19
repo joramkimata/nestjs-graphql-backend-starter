@@ -9,6 +9,7 @@ import { Role } from "../entities/role.entity";
 import { AssignPermissionsInput } from "../inputs/assign-permissions.input";
 import { RoleInput } from "../inputs/role.input";
 import { ResponseRole } from "../responses/role.response";
+import { PaginatedInput } from "src/shared/inputs/pagination.input";
 
 
 @Injectable()
@@ -74,7 +75,7 @@ export class RoleService extends BaseService {
     }
 
     private deleteRolePermissions(id: number) {
-        return this.roleRepository.query(`delete from te_role_permissions where role_id=${id}`);
+        return this.roleRepository.query(`delete from ${process.env.DB_PREFIX}_role_permissions where role_id=${id}`);
     }
 
     private validatePermissions(permissionUUIDs: string[]): Permission[] | PromiseLike<Permission[]> {
@@ -119,6 +120,11 @@ export class RoleService extends BaseService {
             relations: this.relations
         });
     }
+
+    getRolesPaginated({ pageNumber, pageSize }: PaginatedInput) {
+        return this.getPaginatedData<Role>(this.roleRepository, pageNumber, pageSize, ['permissions'])
+    }
+
 
     async deleteRole(uuid: string) {
         const res = new ResponseRole();

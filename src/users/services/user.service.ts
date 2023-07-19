@@ -15,8 +15,10 @@ import { Permission } from "../entities/permission.entity";
 import { Logger } from "@nestjs/common";
 import { UpdateUserInput } from "../inputs/update-user.input";
 import { AssignRolesInput } from "../inputs/assign-roles.input";
+import { PaginatedInput } from "src/shared/inputs/pagination.input";
 
 export class UserService extends BaseService {
+
 
     private logger = new Logger(UserService.name);
 
@@ -31,6 +33,14 @@ export class UserService extends BaseService {
         private permissionRepository: Repository<Permission>,
     ) {
         super();
+    }
+
+    getAllUsers() {
+        return this.getEntitys<User>(this.userRepository, []);
+    }
+
+    getAllUserPaginated(input: PaginatedInput) {
+        return this.getPaginatedData<User>(this.userRepository, input.pageNumber, input.pageSize);
     }
 
     getCurrentUserInfo(user: User) {
@@ -227,7 +237,7 @@ export class UserService extends BaseService {
     }
 
     private deleteRolePermissions(id: number) {
-        return this.roleRepository.query(`delete from te_role_permissions where role_id=${id}`)
+        return this.roleRepository.query(`delete from ${process.env.DB_PREFIX}_role_permissions where role_id=${id}`)
     }
 
     async assignRoles(assignRolesInput: AssignRolesInput) {
@@ -275,7 +285,7 @@ export class UserService extends BaseService {
     }
 
     private deleteRoles(id: number) {
-        return this.userRepository.query(`delete from te_user_roles where user_id=${id}`);
+        return this.userRepository.query(`delete from ${process.env.DB_PREFIX}_user_roles where user_id=${id}`);
     }
 
     private validateRoles(uuids: string[]): Role[] | PromiseLike<Role[]> {

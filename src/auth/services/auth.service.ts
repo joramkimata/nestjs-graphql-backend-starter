@@ -21,11 +21,12 @@ export class AuthService {
         private jwtService: JwtService
     ) { }
 
+
     async getUserPermissions(email: string) {
-        const query = `SELECT pm.name FROM te_users u 
-        INNER JOIN te_user_roles ur ON ur.user_id=u.id 
-        INNER JOIN te_role_permissions rp ON rp.role_id=rp.role_id
-        INNER JOIN te_permissions pm ON pm.id=rp.permission_id
+        const query = `SELECT pm.name FROM ${process.env.DB_PREFIX}_users u 
+        INNER JOIN ${process.env.DB_PREFIX}_user_roles ur ON ur.user_id=u.id 
+        INNER JOIN ${process.env.DB_PREFIX}_role_permissions rp ON rp.role_id=rp.role_id
+        INNER JOIN ${process.env.DB_PREFIX}_permissions pm ON pm.id=rp.permission_id
         WHERE u.email='${email}' GROUP BY pm.name,u.email`;
 
         const permissions = await this.userRepository.query(query);

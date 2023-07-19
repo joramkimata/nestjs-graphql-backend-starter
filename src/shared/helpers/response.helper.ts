@@ -1,5 +1,7 @@
+import { Field, Int, ObjectType } from "@nestjs/graphql";
 import { HttpStatusCode } from "../enums/http-codes.enum";
 import { ResponsePayload } from "../interfaces/response-payload.interface";
+import { Type } from "@nestjs/common";
 
 
 function response<Type extends ResponsePayload>(
@@ -14,6 +16,24 @@ function response<Type extends ResponsePayload>(
     response.status = status;
     response.errorDescription = message;
     return response;
+}
+
+export function responsePaginated<T>(T: Type<T>): any {
+    @ObjectType({ isAbstract: true })
+    abstract class PageClass {
+
+        @Field(() => Int, { nullable: true })
+        totalPages: number;
+
+        @Field(() => [T], { nullable: true })
+        items: T[];
+
+        @Field(() => Int, { nullable: true })
+        totalCount: number;
+
+    }
+
+    return PageClass;
 }
 
 export default response;

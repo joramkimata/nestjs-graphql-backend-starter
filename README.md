@@ -1,3 +1,14 @@
+## Requirements
+
+```
+node -v
+v16.17.0
+```
+
+```
+npm i -g @nestjs/cli@8.0.0
+```
+
 ## Login as Admin
 
 ```

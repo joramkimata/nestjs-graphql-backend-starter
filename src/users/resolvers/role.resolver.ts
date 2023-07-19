@@ -4,6 +4,8 @@ import { AssignPermissionsInput } from "../inputs/assign-permissions.input";
 import { RoleInput } from "../inputs/role.input";
 import { ResponseRole } from "../responses/role.response";
 import { RoleService } from "../services/role.service";
+import { ResponseRolePaginated } from "../responses/role-paginated.response";
+import { PaginatedInput } from "src/shared/inputs/pagination.input";
 
 
 @Resolver(of => Role)
@@ -36,6 +38,14 @@ export class RoleResolver {
     @Query(returns => [Role],)
     getRoles() {
         return this.roleService.getRoles();
+    }
+
+    @Query(returns => ResponseRolePaginated,)
+    getRolesPaginated(
+        @Args('input')
+        input: PaginatedInput
+    ) {
+        return this.roleService.getRolesPaginated(input);
     }
 
     // Query for Get One
