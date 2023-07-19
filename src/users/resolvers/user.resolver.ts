@@ -11,9 +11,18 @@ import { ResponseUser } from "../responses/user.response";
 import { UserService } from "../services/user.service";
 import { PaginatedInput } from "src/shared/inputs/pagination.input";
 import { ResponseUserPaginated } from "../responses/user-paginated.response";
+import { UseGuards } from "@nestjs/common";
+import { GqlAuthGuard } from "src/auth/guards/graphql.guard";
+import { PermissionGuard } from "src/auth/guards/permission.guard";
+import { HasPermission } from "../decorators/has-permission.decorator";
+import { PermissionGroupName } from "../enums/permission-group-name.enum";
 
 
 @Resolver(of => User)
+// @UseGuards(GqlAuthGuard, PermissionGuard)
+// @UseGuards(GqlAuthGuard)
+// @UseGuards(PermissionGuard)
+// @HasPermission({ displayName: "View Users", name: "VIEW_USERS", permissionGroupName: PermissionGroupName.UAA })
 export class UserResolver {
 
     constructor(

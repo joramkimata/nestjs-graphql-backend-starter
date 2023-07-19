@@ -11,9 +11,11 @@ import { UserService } from './services/user.service';
 import { DiscoveryService } from "@golevelup/nestjs-discovery";
 import { PermissionResolver } from './resolvers/permission.resolver';
 import { RoleResolver } from './resolvers/role.resolver';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
     imports: [
+        AuthModule,
         DiscoveryModule,
         TypeOrmModule.forFeature([
             User,
