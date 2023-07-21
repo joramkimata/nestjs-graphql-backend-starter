@@ -1,4 +1,4 @@
-import { Repository } from "typeorm";
+import { Not, Repository } from "typeorm";
 import { GenericPaginatedResponse } from "../interfaces/generic-paginated-response.interface";
 
 
@@ -10,6 +10,15 @@ export class BaseService {
                 id
             },
             relations
+        });
+    }
+
+    async checkRestExistanceNotId<T>(repo: Repository<T>, id: number): Promise<T> {
+        return repo.findOne({
+            where: {
+                deleted: false,
+                id: Not(id)
+            }
         });
     }
 
