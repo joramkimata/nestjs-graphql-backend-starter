@@ -22,6 +22,19 @@ export class BaseService {
         });
     }
 
+    async getEntitiesWhere<T>(repo: Repository<T>, whereObject:   FindConditions<T>,relations: string[]): Promise<T[]> {
+
+        const obj = {
+            deleted: false,
+            ...whereObject
+        }
+
+        return repo.find({
+            where: obj,
+            relations
+        });
+    }
+
     async getEntitys<T>(repo: Repository<T>, relations: string[]): Promise<T[]> {
         return repo.find({
             where: {
