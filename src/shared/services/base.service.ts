@@ -13,13 +13,18 @@ export class BaseService {
         });
     }
 
-    async checkRestExistanceNotId<T>(repo: Repository<T>, id: number): Promise<T> {
+    async checkRestExistanceNotId<T>(repo: Repository<T>, id: number, whereObject: FindConditions<T>, relations: string[] = []): Promise<T> {
+        const obj = {
+            deleted: false,
+            id: Not(id),
+            ...whereObject
+        }
+
         return repo.findOne({
-            where: {
-                deleted: false,
-                id: Not(id)
-            }
+            where: obj,
+            relations
         });
+
     }
 
     async getEntitiesWhere<T>(repo: Repository<T>, whereObject:   FindConditions<T>,relations: string[]): Promise<T[]> {
