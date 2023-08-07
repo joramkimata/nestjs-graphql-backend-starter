@@ -21,8 +21,10 @@ export class BaseService {
         }
 
         return repo.findOne({
-            where: obj,
-            relations
+            where: {
+                deleted: false,
+                id: Not(id)
+            }
         });
 
     }
