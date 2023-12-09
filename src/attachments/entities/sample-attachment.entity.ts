@@ -12,6 +12,8 @@ export class SampleAttachment extends BaseEntity {
     @Column()
     sample: string
 
+    // Step 1: Add this on your entity that what to get attachments
+    // Check Step 2 in resolvers folder @ sample-attachment.resolver.ts
     @Field(type => [Attachment], { nullable: true })
     attachments: Attachment[];
 
