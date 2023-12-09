@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import ormConfig from './config/orm.config';
 import { UsersModule } from './users/users.module';
 import { SharedModule } from './shared/shared.module';
+import { AttachmentsModule } from './attachments/attachments.module';
 import jwtConfig from './config/jwt.config';
 
 @Module({
@@ -29,7 +30,8 @@ import jwtConfig from './config/jwt.config';
     }),
     AuthModule,
     UsersModule,
-    SharedModule
+    SharedModule,
+    AttachmentsModule
   ],
 })
 export class AppModule { }

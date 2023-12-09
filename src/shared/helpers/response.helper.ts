@@ -6,7 +6,7 @@ import { Type } from "@nestjs/common";
 
 function response<Type extends ResponsePayload>(
     data: any,
-    response: Type,
+    response: Type | any,
     message = '',
     statusCode: HttpStatusCode = HttpStatusCode.SUCCESS,
     status = true,
